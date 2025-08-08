@@ -10,6 +10,7 @@
 - **用户屏蔽**：可以屏蔽特定用户，不接收其消息
 - **消息统计**：查看推送统计和关键词命中情况
 - **安全可靠**：会话文件本地存储，支持错误恢复
+- **文本日志转发**：监控到的消息会写入 `monitor_log.txt`，可由 `file_forward_bot.py` 按行转发到指定聊天
 
 ## 📋 功能列表
 
@@ -149,6 +150,14 @@
 | `/unblock` | 解除屏蔽指定用户 | `/unblock 123456789` |
 | `/list_blocked_users` | 查看屏蔽用户列表 | `/list_blocked_users` |
 | `/my_stats` | 查看推送统计信息 | `/my_stats` |
+
+### 文件日志转发机器人
+
+使用 `file_forward_bot.py` 可以通过按钮控制地读取 `monitor_log.txt` 并逐行推送到当前聊天。
+
+1. 运行 `python3 file_forward_bot.py`
+2. 在 Telegram 中发送 `/start` 并点击“开始转发”
+3. 点击“停止转发”即可结束监听
 
 ### 获取会话文件
 
