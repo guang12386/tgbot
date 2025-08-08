@@ -58,11 +58,11 @@ DB_PATH = 'bot.db'
 MONITOR_LOG_FILE = 'monitor_log.txt'
 
 # 环境变量
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-ADMIN_IDS = os.getenv('ADMIN_IDS')  # 逗号分隔的管理员用户 ID
-ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'demonkinghaha')  # 默认值为 'demonkinghaha'
-API_ID = os.getenv('TELEGRAM_API_ID')
-API_HASH = os.getenv('TELEGRAM_API_HASH')
+BOT_TOKEN = "8297216972:AAEZEeWLxie6xc0Fqd1wNKWrkqB-iIshQ9o"
+ADMIN_IDS = "6243450824" # 逗号分隔的管理员用户 ID
+ADMIN_USERNAME = "guang8886667"  # 默认值为 'demonkinghaha'
+API_ID = 26421757
+API_HASH = "48fcd54b0abdc43f7b1e3441fded0d73"
 # 验证必要的环境变量
 required_env_vars = ['TELEGRAM_BOT_TOKEN', 'ADMIN_IDS', 'TELEGRAM_API_ID', 'TELEGRAM_API_HASH']
 missing_vars = [var for var in required_env_vars if not os.getenv(var)]
