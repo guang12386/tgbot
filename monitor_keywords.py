@@ -1005,7 +1005,25 @@ class TelegramBot:
         logger.debug(f"收到回调查询: {data}")
 
         try:
-            if data.startswith("block_user:"):
+            if data.startswith("delete:"):
+                keyword_to_delete = data.split(":", 1)[1]
+                user_id = update.effective_user.id
+
+                if self.db_manager.remove_keyword(user_id, keyword_to_delete):
+                    await query.answer()
+                    await query.edit_message_text(
+                        f"✅ 关键词 '{keyword_to_delete}' 已删除。",
+                        parse_mode='Markdown'
+                    )
+                    logger.info(f"用户 {user_id} 删除了关键词 '{keyword_to_delete}'。")
+                else:
+                    await query.answer()
+                    await query.edit_message_text(
+                        f"⚠️ 关键词 '{keyword_to_delete}' 未找到。",
+                        parse_mode='Markdown'
+                    )
+
+            elif data.startswith("block_user:"):
                 # 解析用户ID
                 _, target_user_id, receiving_user_id = data.split(":")
                 target_user_id = int(target_user_id)
@@ -1547,23 +1565,6 @@ class TelegramBot:
         except Exception as e:
             logger.error(f"获取关键词列表失败: {e}", exc_info=True)
             await update.message.reply_text("❌ 获取关键词列表时发生错误。", parse_mode='Markdown')
-
-    @restricted
-    async def button_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        query = update.callback_query
-        data = query.data
-
-        if data.startswith("delete:"):
-            keyword_to_delete = data.split(":", 1)[1]
-            
-            # 使用 DatabaseManager 删除关键词
-            if self.db_manager.remove_keyword(update.effective_user.id, keyword_to_delete):
-                await query.answer()
-                await query.edit_message_text(f"✅ 关键词 '{keyword_to_delete}' 已删除。", parse_mode='Markdown')
-                logger.info(f"用户 {update.effective_user.id} 删除了关键词 '{keyword_to_delete}'。")
-            else:
-                await query.answer()
-                await query.edit_message_text(f"⚠️ 关键词 '{keyword_to_delete}' 未找到。", parse_mode='Markdown')
 
     @restricted
     async def list_keywords(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
